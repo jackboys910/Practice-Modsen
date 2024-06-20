@@ -19,10 +19,22 @@ const SearchBar = ({ onSearch }) => {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-          placeholder='Search for books'
         />
+        <button className='search-bar__main-icon' onClick={handleSearch}>
+          Search
+        </button>
+        {/* <label>
+          <svg src='../public/loupe-icon32x32.jpg'></svg>
+        </label> */}
+        {/* <button className='search-bar__main-button' onClick={handleSearch}>
+          <svg>
+            <image src='../public/loupe-icon32x32.jpg'></image>
+          </svg>
+        </button> */}
         {/* <i className='loupe-icon' aria-hidden='true'></i> */}
+        {/* <i src='../public/loupe-icon32x32.jpg'></i> */}
       </div>
+      <h2 className='search-bar__select-explanatory'>Categories</h2>
       <select
         className='search-bar__select'
         value={category}
@@ -36,6 +48,7 @@ const SearchBar = ({ onSearch }) => {
         <option value='medical'>Medical</option>
         <option value='poetry'>Poetry</option>
       </select>
+      <h2 className='search-bar__select-explanatory'>Sorting by</h2>
       <select
         className='search-bar__select'
         value={sort}
@@ -44,9 +57,9 @@ const SearchBar = ({ onSearch }) => {
         <option value='relevance'>Relevance</option>
         <option value='newest'>Newest</option>
       </select>
-      <button className='search-bar__button' onClick={handleSearch}>
+      {/* <button className='search-bar__button' onClick={handleSearch}>
         Search
-      </button>
+      </button> */}
     </div>
   );
 };

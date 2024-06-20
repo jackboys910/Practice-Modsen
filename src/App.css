@@ -21,6 +21,7 @@
 
 .search-bar__main-align {
   margin-bottom: 30px;
+  /* position: relative; */
 }
 
 /* .search-bar__main-align .loupe-icon {
@@ -31,25 +32,45 @@
 } */
 
 .search-bar__main {
-  width: 40%;
-  height: 25px;
+  width: 45%;
+  height: 22px;
   margin: 5px;
   padding: 10px;
+  font-size: 22px;
+  font-weight: 500;
+  border: none;
+  outline: none;
 }
 
-/* i.loupe-icon {
-  position: relative;
-  float: left;
-  z-index: 1;
-  margin-right: 450px;
-  margin-top: 150px;
+/* i {
+  position: absolute;
   text-align: center;
-  background: url(../public/loupe-icon32x32.jpg) no-repeat; */
+  background: url(../public/loupe-icon32x32.jpg) no-repeat;
+} */
 
-.search-bar__select,
-.search-bar__button {
+.search-bar__select-explanatory {
+  display: inline;
+  color: #fff;
+  font-weight: 400;
+  font-size: 20px;
+  margin-left: 15px;
+  margin-right: 5px;
+}
+
+.search-bar__main-icon {
   margin: 5px;
   padding: 10px;
+  height: 42px;
+}
+
+.search-bar__select {
+  margin: 5px;
+  padding: 10px;
+  height: 42px;
+  width: 200px;
+  border: none;
+  outline: none;
+  font-size: 18px;
 }
 
 .results-info {
