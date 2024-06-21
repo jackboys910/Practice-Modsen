@@ -1,11 +1,11 @@
 import React from 'react';
 
-const BookCard = ({ book }) => {
+const BookCard = ({ book, onClick }) => {
   const { volumeInfo } = book;
   const { title, authors, categories, imageLinks } = volumeInfo || {};
 
   return (
-    <div className='book-list__card'>
+    <div className='book-list__card' onClick={() => onClick(book)}>
       <div className='book-list__card-image'>
         {imageLinks && (
           <img src={imageLinks.thumbnail} alt={`${title} cover`} />

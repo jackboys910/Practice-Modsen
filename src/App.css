@@ -12,6 +12,10 @@
   text-align: center; */
 }
 
+.no-margin {
+  margin-bottom: 0;
+}
+
 .search-bar__heading {
   color: #fff;
   font-size: 50px;
@@ -21,7 +25,16 @@
 
 .search-bar__main-align {
   margin-bottom: 30px;
-  /* position: relative; */
+  position: relative;
+}
+
+.search-bar__main-icon {
+  position: absolute;
+  top: 20px;
+  right: 27vw;
+  cursor: pointer;
+  width: 40px;
+  height: 25px;
 }
 
 /* .search-bar__main-align .loupe-icon {
@@ -40,6 +53,7 @@
   font-weight: 500;
   border: none;
   outline: none;
+  position: relative;
 }
 
 /* i {
@@ -57,11 +71,11 @@
   margin-right: 5px;
 }
 
-.search-bar__main-icon {
+/* .search-bar__main-iconTest {
   margin: 5px;
   padding: 10px;
   height: 42px;
-}
+} */
 
 .search-bar__select {
   margin: 5px;

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import SearchBar from './components/SearchBar';
 import BookList from './components/BookList';
 import Loader from './components/Loader';
+import BookDetail from './components/BookDetail';
 import { API_KEY } from './config';
 import './App.css';
 
@@ -15,6 +16,7 @@ function App() {
     sort: 'relevance',
     startIndex: 0,
   });
+  const [selectedBook, setSelectBook] = useState(null);
 
   const fetchBooks = async (newQueryParams) => {
     const { query, category, sort, startIndex } = newQueryParams;
@@ -45,18 +47,39 @@ function App() {
     fetchBooks({ ...queryParams, startIndex: queryParams.startIndex + 30 });
   };
 
+  const handleBookSelect = (book) => {
+    setSelectBook(book);
+  };
+
+  const handleBack = () => {
+    setSelectBook(null);
+  };
+
   return (
     <div className='App'>
-      <SearchBar onSearch={handleSearch} />
+      <SearchBar
+        onSearch={handleSearch}
+        className={selectedBook ? 'no-margin' : ''}
+      />
       {loading && <Loader />}
-      <div className='results-info'>
-        {totalItems > 0 && <p>Found {totalItems} results</p>}
-      </div>
-      {Array.isArray(books) && <BookList books={books} />}
-      {totalItems > (books?.length || 0) && (
-        <button onClick={loadMoreBooks} className='load-more'>
-          Load more
-        </button>
+      {!selectedBook && totalItems > 0 && (
+        <div className='results-info'>
+          <p>Found {totalItems} results</p>
+        </div>
+      )}
+      {selectedBook ? (
+        <BookDetail book={selectedBook} onBack={handleBack} />
+      ) : (
+        <>
+          {Array.isArray(books) && (
+            <BookList books={books} onBookSelect={handleBookSelect} />
+          )}
+          {totalItems > (books?.length || 0) && (
+            <button onClick={loadMoreBooks} className='load-more'>
+              Load more
+            </button>
+          )}
+        </>
       )}
     </div>
   );
