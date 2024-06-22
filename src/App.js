@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SearchBar from './components/SearchBar';
 import BookList from './components/BookList';
 import Loader from './components/Loader';
@@ -11,7 +11,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [totalItems, setTotalItems] = useState(0);
   const [queryParams, setQueryParams] = useState({
-    query: '',
+    query: 'all',
     category: 'all',
     sort: 'relevance',
     startIndex: 0,
@@ -20,16 +20,31 @@ function App() {
 
   const fetchBooks = async (newQueryParams) => {
     const { query, category, sort, startIndex } = newQueryParams;
-    const categoryQuery = category !== 'all' ? `+subject:${category}` : '';
-    const url = `https://www.googleapis.com/books/v1/volumes?q=${query}${categoryQuery}&orderBy=${sort}&startIndex=${startIndex}&maxResults=30&key=${API_KEY}`;
+    // const categoryQuery = category !== 'all' ? `+subject:${category}` : '';
+    // const url = `https://www.googleapis.com/books/v1/volumes?q=${query}${categoryQuery}&orderBy=${sort}&startIndex=${startIndex}&maxResults=30&key=${API_KEY}`;
+
+    const categoryQuery =
+      category !== 'all' ? `+subject:${encodeURIComponent(category)}` : '';
+    const searchQuery = query ? encodeURIComponent(query) : '';
+    const url = `https://www.googleapis.com/books/v1/volumes?q=${searchQuery}${categoryQuery}&orderBy=${encodeURIComponent(sort)}&startIndex=${startIndex}&maxResults=30&key=${API_KEY}`;
+
+    console.log('Fetching books with URL:', url);
 
     try {
       setLoading(true);
       const response = await fetch(url);
       const data = await response.json();
-      setBooks((prevBooks) =>
-        startIndex === 0 ? data.items : [...prevBooks, ...data.items],
-      );
+      const newBooks = data.items || [];
+
+      setBooks((prevBooks) => {
+        // Фильтруем дублирующиеся книги
+        const allBooks = [...prevBooks, ...newBooks];
+        const uniqueBooks = Array.from(
+          new Set(allBooks.map((book) => book.id)),
+        ).map((id) => allBooks.find((book) => book.id === id));
+        return uniqueBooks;
+      });
+
       setTotalItems(data.totalItems || 0);
       setQueryParams(newQueryParams);
     } catch (error) {
@@ -39,7 +54,13 @@ function App() {
     }
   };
 
+  useEffect(() => {
+    fetchBooks(queryParams);
+  }, []);
+
   const handleSearch = (searchParams) => {
+    setSelectBook(null);
+    setBooks([]);
     fetchBooks({ ...searchParams, startIndex: 0 });
   };
 
@@ -55,6 +76,14 @@ function App() {
     setSelectBook(null);
   };
 
+  const handleAuthorSearch = (author) => {
+    handleSearch({
+      query: `inauthor:${author}`,
+      category: 'all',
+      sort: 'relevance',
+    });
+  };
+
   return (
     <div className='App'>
       <SearchBar
@@ -62,19 +91,23 @@ function App() {
         className={selectedBook ? 'no-margin' : ''}
       />
       {loading && <Loader />}
-      {!selectedBook && totalItems > 0 && (
+      {!selectedBook && totalItems > 0 && !loading && (
         <div className='results-info'>
           <p>Found {totalItems} results</p>
         </div>
       )}
       {selectedBook ? (
-        <BookDetail book={selectedBook} onBack={handleBack} />
+        <BookDetail
+          book={selectedBook}
+          onBack={handleBack}
+          onAuthorSearch={handleAuthorSearch}
+        />
       ) : (
         <>
           {Array.isArray(books) && (
             <BookList books={books} onBookSelect={handleBookSelect} />
           )}
-          {totalItems > (books?.length || 0) && (
+          {!loading && totalItems > (books?.length || 0) && (
             <button onClick={loadMoreBooks} className='load-more'>
               Load more
             </button>

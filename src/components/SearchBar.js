@@ -6,7 +6,7 @@ const SearchBar = ({ onSearch, className }) => {
   const [sort, setSort] = useState('relevance');
 
   const handleSearch = () => {
-    onSearch({ query, category, sort });
+    onSearch({ query: query || 'all', category, sort });
   };
 
   return (
