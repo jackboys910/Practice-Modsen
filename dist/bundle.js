@@ -76,7 +76,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \***********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   API_KEY: () => (/* binding */ API_KEY)\n/* harmony export */ });\nvar API_KEY = 'AIzaSyDUvFyFGX2fu-zARfD-yGECy1mabCdg4No';\n\n//# sourceURL=webpack://modsen-project/./src/config.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   API_KEY: () => (/* binding */ API_KEY)\n/* harmony export */ });\nvar API_KEY = \"AIzaSyDUvFyFGX2fu-zARfD-yGECy1mabCdg4No\";\n\n//# sourceURL=webpack://modsen-project/./src/config.js?");
 
 /***/ }),
 

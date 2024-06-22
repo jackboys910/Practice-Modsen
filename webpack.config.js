@@ -1,5 +1,6 @@
 const path = require('path'); // Импортируем модуль "path" для работы с путями файлов
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: './src/index.js', // Точка входа для сборки проекта
@@ -29,6 +30,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
+    new Dotenv(),
   ],
 
   devServer: {
