@@ -9,6 +9,24 @@ const SearchBar = ({ onSearch, className }) => {
     onSearch({ query: query || 'all', category, sort });
   };
 
+  const handleQueryChange = (e) => {
+    setQuery(e.target.value);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
+  const handleCategoryChange = (e) => {
+    setCategory(e.target.value);
+  };
+
+  const handleSortChange = (e) => {
+    setSort(e.target.value);
+  };
+
   return (
     <div className={`search-bar ${className}`}>
       <h1 className='search-bar__heading'>Search for books</h1>
@@ -17,8 +35,8 @@ const SearchBar = ({ onSearch, className }) => {
           className='search-bar__main'
           type='text'
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+          onChange={handleQueryChange}
+          onKeyPress={handleKeyPress}
         />
         <i
           className='search-bar__main-icon fa fa-search'
@@ -33,7 +51,7 @@ const SearchBar = ({ onSearch, className }) => {
       <select
         className='search-bar__select'
         value={category}
-        onChange={(e) => setCategory(e.target.value)}
+        onChange={handleCategoryChange}
       >
         <option value='all'>All</option>
         <option value='art'>Art</option>
@@ -47,7 +65,7 @@ const SearchBar = ({ onSearch, className }) => {
       <select
         className='search-bar__select'
         value={sort}
-        onChange={(e) => setSort(e.target.value)}
+        onChange={handleSortChange}
       >
         <option value='relevance'>Relevance</option>
         <option value='newest'>Newest</option>

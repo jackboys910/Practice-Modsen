@@ -4,8 +4,12 @@ const BookCard = ({ book, onClick }) => {
   const { volumeInfo } = book;
   const { title, authors, categories, imageLinks } = volumeInfo || {};
 
+  const handleClick = () => {
+    onClick(book);
+  };
+
   return (
-    <div className='book-list__card' onClick={() => onClick(book)}>
+    <div className='book-list__card' onClick={handleClick}>
       <div className='book-list__card-image'>
         {imageLinks && (
           <img src={imageLinks.thumbnail} alt={`${title} cover`} />

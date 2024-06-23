@@ -17,14 +17,13 @@ const BookList = ({ books, onBookSelect }) => {
     (id) => books.find((book) => book.id === id),
   );
 
-  return (
-    <div className='book-list'>
-      {Array.isArray(uniqueBooks) &&
-        uniqueBooks.map((book) => (
-          <BookCard key={book.id} book={book} onClick={onBookSelect} />
-        ))}
-    </div>
-  );
+  const renderedBooks =
+    Array.isArray(uniqueBooks) &&
+    uniqueBooks.map((book) => (
+      <BookCard key={book.id} book={book} onClick={onBookSelect} />
+    ));
+
+  return <div className='book-list'>{renderedBooks}</div>;
 };
 
 export default BookList;
