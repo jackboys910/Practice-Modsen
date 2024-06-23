@@ -3,7 +3,7 @@ import SearchBar from './SearchBar';
 import BookList from './BookList';
 import Loader from './Loader';
 import BookDetail from './BookDetail';
-import { API_KEY } from '../config';
+import { API_KEY, API_BASE_URL } from '../config';
 import './BookSearch.css';
 
 function BookSearch() {
@@ -26,7 +26,7 @@ function BookSearch() {
     const categoryQuery =
       category !== 'all' ? `+subject:${encodeURIComponent(category)}` : '';
     const searchQuery = query ? encodeURIComponent(query) : '';
-    const url = `https://www.googleapis.com/books/v1/volumes?q=${searchQuery}${categoryQuery}&orderBy=${encodeURIComponent(sort)}&startIndex=${startIndex}&maxResults=30&key=${API_KEY}`;
+    const url = `${API_BASE_URL}?q=${searchQuery}${categoryQuery}&orderBy=${encodeURIComponent(sort)}&startIndex=${startIndex}&maxResults=30&key=${API_KEY}`;
 
     console.log('Fetching books with URL:', url);
 
