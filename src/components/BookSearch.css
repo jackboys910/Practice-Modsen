@@ -82,7 +82,15 @@
   font-size: 18px;
 }
 
-.results-info {
+.book-search__error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.book-search__results-info {
   margin-top: 10px;
   margin-bottom: 20px;
   font-size: 19px;
@@ -178,7 +186,7 @@
   text-overflow: ellipsis;
 }
 
-.load-more {
+.book-search__load-more {
   padding: 10px 20px;
   font-size: 1em;
   margin: 20px;

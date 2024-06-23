@@ -17,6 +17,7 @@ function BookSearch() {
     startIndex: 0,
   });
   const [selectedBook, setSelectBook] = useState(null);
+  const [error, setError] = useState(null);
 
   const fetchBooks = async (newQueryParams) => {
     const { query, category, sort, startIndex } = newQueryParams;
@@ -32,10 +33,14 @@ function BookSearch() {
 
     try {
       setLoading(true);
+      setError(null);
       const response = await fetch(url);
       const data = await response.json();
-      const newBooks = data.items || [];
+      if (!data.items) {
+        throw new Error('No books found.');
+      }
 
+      const newBooks = data.items || [];
       setBooks((prevBooks) => {
         // Фильтруем дублирующиеся книги
         const allBooks = [...prevBooks, ...newBooks];
@@ -49,6 +54,7 @@ function BookSearch() {
       setQueryParams(newQueryParams);
     } catch (error) {
       console.error('Error fetching books:', error);
+      setError('An eror occurred while fetching books.');
     } finally {
       setLoading(false);
     }
@@ -85,14 +91,15 @@ function BookSearch() {
   };
 
   return (
-    <div className='BookSearch'>
+    <div className='book-search'>
       <SearchBar
         onSearch={handleSearch}
         className={selectedBook ? 'no-margin' : ''}
       />
       {loading && <Loader />}
+      {error && <div className='book-search__error-message'>{error}</div>}
       {!selectedBook && totalItems > 0 && !loading && (
-        <div className='results-info'>
+        <div className='book-search__results-info'>
           <p>Found {totalItems} results</p>
         </div>
       )}
@@ -108,7 +115,7 @@ function BookSearch() {
             <BookList books={books} onBookSelect={handleBookSelect} />
           )}
           {!loading && totalItems > (books?.length || 0) && (
-            <button onClick={loadMoreBooks} className='load-more'>
+            <button onClick={loadMoreBooks} className='book-search__load-more'>
               Load more
             </button>
           )}
