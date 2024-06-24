@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import SearchBar from './SearchBar';
-import BookList from './BookList';
-import Loader from './Loader';
-import BookDetail from './BookDetail';
-import { API_KEY, API_BASE_URL } from '../config';
+import SearchBar from '../SearchBar/SearchBar';
+import BookList from '../BookList/BookList';
+import Loader from '../Loader/Loader';
+import BookDetail from '../BookDetail/BookDetail';
+import { API_KEY, API_BASE_URL } from '../../constants/config';
 import './BookSearch.css';
 
 function BookSearch() {
