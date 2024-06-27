@@ -31,28 +31,21 @@ const SearchBar = ({ onSearch, className }) => {
     <div className={`search-bar ${className}`}>
       <h1 className='search-bar__heading'>Search for books</h1>
       <div className='search-bar__main-align'>
-        <input
-          className='search-bar__main'
-          type='text'
-          value={query}
-          onChange={handleQueryChange}
-          onKeyPress={handleKeyPress}
-        />
-        <i
+        <input className='search-bar__main' type='text' value={query} onChange={handleQueryChange} onKeyPress={handleKeyPress} />
+        {/* <i
           className='search-bar__main-icon fa fa-search'
           onClick={handleSearch}
           aria-hidden='true'
-        ></i>
+        ></i> */}
+        <button className='search-bar__main-button' onClick={handleSearch}>
+          <i className='fa fa-search' aria-hidden='true'></i>
+        </button>
         {/* <button className='search-bar__main-iconTest' onClick={handleSearch}>
           Search
         </button> */}
       </div>
       <h2 className='search-bar__select-explanatory'>Categories</h2>
-      <select
-        className='search-bar__select'
-        value={category}
-        onChange={handleCategoryChange}
-      >
+      <select className='search-bar__select' value={category} onChange={handleCategoryChange}>
         <option value='all'>All</option>
         <option value='art'>Art</option>
         <option value='biography'>Biography</option>
@@ -62,11 +55,7 @@ const SearchBar = ({ onSearch, className }) => {
         <option value='poetry'>Poetry</option>
       </select>
       <h2 className='search-bar__select-explanatory'>Sorting by</h2>
-      <select
-        className='search-bar__select'
-        value={sort}
-        onChange={handleSortChange}
-      >
+      <select className='search-bar__select' value={sort} onChange={handleSortChange}>
         <option value='relevance'>Relevance</option>
         <option value='newest'>Newest</option>
       </select>

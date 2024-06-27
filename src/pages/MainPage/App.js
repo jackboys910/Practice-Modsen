@@ -1,6 +1,8 @@
-import React from 'react';
-import BookSearch from '../../components/BookSearch/BookSearch';
 import './App.css';
+
+import React from 'react';
+
+import BookSearch from '../../components/BookSearch/BookSearch';
 
 function App() {
   return (
