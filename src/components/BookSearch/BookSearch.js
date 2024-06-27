@@ -54,6 +54,7 @@ function BookSearch() {
     } catch (error) {
       console.error('Error fetching books:', error);
       setError('An eror occurred while fetching books.');
+      setTotalItems(0);
     } finally {
       setLoading(false);
     }
