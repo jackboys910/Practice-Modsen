@@ -1,20 +1,53 @@
 import './BookDetail.css';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
+import { API_BASE_URL, API_KEY } from '../../constants/config';
 
 const BookDetail = ({ book, onBack, onAuthorSearch }) => {
+  const [image, setImage] = useState(null);
   const { volumeInfo } = book;
   const { title, authors, categories, description, imageLinks } = volumeInfo || {};
 
-  const getHighQualityImage = (imageLinks) => {
-    if (imageLinks) {
-      console.log('Image Links:', imageLinks);
-      return imageLinks.extraLarge || imageLinks.large || imageLinks.thumbnail;
+  const fetchImage = async (bookId) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/${bookId}?key=${API_KEY}`);
+      const data = await response.json();
+      if (data.volumeInfo && data.volumeInfo.imageLinks) {
+        console.log('Image Links:', data.volumeInfo.imageLinks);
+        setImage(
+          data.volumeInfo.imageLinks.extraLarge ||
+            data.volumeInfo.imageLinks.large ||
+            data.volumeInfo.imageLinks.medium ||
+            data.volumeInfo.imageLinks.small ||
+            data.volumeInfo.imageLinks.thumbnail ||
+            data.volumeInfo.imageLinks.smallThumbnail,
+        );
+      } else {
+        console.error('No image links available');
+        setImage(null);
+      }
+    } catch (error) {
+      console.error('Error fetching image:', error);
+      setImage(null);
     }
-    return null;
   };
 
-  const highQualityImage = getHighQualityImage(imageLinks);
+  useEffect(() => {
+    if (book.id) {
+      fetchImage(book.id);
+    }
+  }, [book]);
+
+  // const getHighQualityImage = (imageLinks) => {
+  //   if (imageLinks) {
+  //     console.log('Image Links:', imageLinks);
+  //     return imageLinks.extraLarge || imageLinks.large || imageLinks.thumbnail;
+  //   }
+  //   return null;
+  // };
+
+  // const highQualityImage = getHighQualityImage(imageLinks);
 
   const handleAuthorClick = (author) => {
     onAuthorSearch(`"${author}"`);
@@ -23,9 +56,7 @@ const BookDetail = ({ book, onBack, onAuthorSearch }) => {
   return (
     <div className='book-detail'>
       <div className='book-detail__block-left'>
-        <div className='book-detail__block-image'>
-          {highQualityImage && <img className='book-detail__image-big' src={highQualityImage} alt={title} />}
-        </div>
+        <div className='book-detail__block-image'>{image && <img className='book-detail__image-big' src={image} alt={title} />}</div>
       </div>
       <div className='book-detail__block-right'>
         {/* <button className='book-detail__back-button' onClick={onBack}>
