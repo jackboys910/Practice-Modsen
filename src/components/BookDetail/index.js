@@ -1,4 +1,4 @@
-import './BookDetail.css';
+import './index.css';
 
 import React, { useEffect, useState } from 'react';
 

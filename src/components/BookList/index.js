@@ -1,6 +1,6 @@
 import React from 'react';
 
-import BookCard from '../BookCard/BookCard';
+import BookCard from '../BookCard';
 
 // const BookList = ({ books, onBookSelect }) => {
 //   return (

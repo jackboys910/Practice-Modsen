@@ -1,12 +1,12 @@
-import './BookSearch.css';
+import './index.css';
 
 import React, { useEffect, useState } from 'react';
 
 import { API_BASE_URL, API_KEY } from '../../constants/config';
-import BookDetail from '../BookDetail/BookDetail';
-import BookList from '../BookList/BookList';
-import Loader from '../Loader/Loader';
-import SearchBar from '../SearchBar/SearchBar';
+import BookDetail from '../BookDetail';
+import BookList from '../BookList';
+import Loader from '../Loader';
+import SearchBar from '../SearchBar';
 
 function BookSearch() {
   const [books, setBooks] = useState([]);
