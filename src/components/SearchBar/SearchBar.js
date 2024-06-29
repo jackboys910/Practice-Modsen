@@ -5,6 +5,21 @@ const SearchBar = ({ onSearch, className }) => {
   const [category, setCategory] = useState('all');
   const [sort, setSort] = useState('relevance');
 
+  const categories = [
+    { value: 'all', label: 'All' },
+    { value: 'art', label: 'Art' },
+    { value: 'biography', label: 'Biography' },
+    { value: 'computers', label: 'Computers' },
+    { value: 'history', label: 'History' },
+    { value: 'medical', label: 'Medical' },
+    { value: 'poetry', label: 'Poetry' },
+  ];
+
+  const sorts = [
+    { value: 'relevance', label: 'Relevance' },
+    { value: 'newest', label: 'Newest' },
+  ];
+
   const handleSearch = () => {
     onSearch({ query: query || 'all', category, sort });
   };
@@ -46,18 +61,19 @@ const SearchBar = ({ onSearch, className }) => {
       </div>
       <h2 className='search-bar__select-explanatory'>Categories</h2>
       <select className='search-bar__select' value={category} onChange={handleCategoryChange}>
-        <option value='all'>All</option>
-        <option value='art'>Art</option>
-        <option value='biography'>Biography</option>
-        <option value='computers'>Computers</option>
-        <option value='history'>History</option>
-        <option value='medical'>Medical</option>
-        <option value='poetry'>Poetry</option>
+        {categories.map((category) => (
+          <option key={category.value} value={category.value}>
+            {category.label}
+          </option>
+        ))}
       </select>
       <h2 className='search-bar__select-explanatory'>Sorting by</h2>
       <select className='search-bar__select' value={sort} onChange={handleSortChange}>
-        <option value='relevance'>Relevance</option>
-        <option value='newest'>Newest</option>
+        {sorts.map((sort) => (
+          <option key={sort.value} value={sort.value}>
+            {sort.label}
+          </option>
+        ))}
       </select>
     </div>
   );
