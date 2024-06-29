@@ -55,10 +55,10 @@ const BookDetail = ({ book, onBack, onAuthorSearch }) => {
 
   return (
     <div className='book-detail'>
-      <div className='book-detail__block-left'>
+      <div className='book-detail__block'>
         <div className='book-detail__block-image'>{image && <img className='book-detail__image-big' src={image} alt={title} />}</div>
       </div>
-      <div className='book-detail__block-right'>
+      <div className='book-detail__block'>
         {/* <button className='book-detail__back-button' onClick={onBack}>
           Back
         </button> */}

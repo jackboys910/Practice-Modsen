@@ -2,8 +2,7 @@
   display: flex;
 }
 
-.book-detail__block-left,
-.book-detail__block-right {
+.book-detail__block {
   width: 50%;
 }
 
