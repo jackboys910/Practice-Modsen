@@ -47,17 +47,9 @@ const SearchBar = ({ onSearch, className }) => {
       <h1 className='search-bar__heading'>Search for books</h1>
       <div className='search-bar__main-align'>
         <input className='search-bar__main' type='text' value={query} onChange={handleQueryChange} onKeyPress={handleKeyPress} />
-        {/* <i
-          className='search-bar__main-icon fa fa-search'
-          onClick={handleSearch}
-          aria-hidden='true'
-        ></i> */}
         <button className='search-bar__main-button' onClick={handleSearch}>
           <i className='fa fa-search' aria-hidden='true'></i>
         </button>
-        {/* <button className='search-bar__main-iconTest' onClick={handleSearch}>
-          Search
-        </button> */}
       </div>
       <h2 className='search-bar__select-explanatory'>Categories</h2>
       <select className='search-bar__select' value={category} onChange={handleCategoryChange}>

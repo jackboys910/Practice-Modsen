@@ -3,8 +3,6 @@
   height: 300px;
   background-image: url(../../assets/photoBackground.jpg);
   background-size: cover;
-  /* position: relative;
-    text-align: center; */
 }
 
 .no-margin {
@@ -34,13 +32,6 @@
   background-color: transparent;
 }
 
-/* .search-bar__main-align .loupe-icon {
-    position: absolute;
-    right: 0;
-    top: 5px;
-    padding: 10px 13px;
-  } */
-
 .search-bar__main {
   width: 45%;
   height: 22px;
@@ -53,12 +44,6 @@
   position: relative;
 }
 
-/* i {
-    position: absolute;
-    text-align: center;
-    background: url(../public/loupe-icon32x32.jpg) no-repeat;
-  } */
-
 .search-bar__select-explanatory {
   display: inline;
   color: #fff;
@@ -67,12 +52,6 @@
   margin-left: 15px;
   margin-right: 5px;
 }
-
-/* .search-bar__main-iconTest {
-    margin: 5px;
-    padding: 10px;
-    height: 42px;
-  } */
 
 .search-bar__select {
   margin: 5px;
@@ -111,12 +90,8 @@
   width: 290px;
   height: 400px;
   text-align: left;
-  /* width: calc(25% - 40px);  */
-  /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
   background-color: #eff2f2;
-  /* display: flex; 
-    flex-direction: column;  */
-  position: relative; /* try */
+  position: relative;
   cursor: pointer;
 }
 
@@ -130,28 +105,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* overflow: hidden; 
-    width: 100%; 
-    height: 200px;  */
 }
 
 .book-list__card-image img {
   max-width: 100%;
-  /* max-height: 100%; */
   border-radius: 5px;
   margin-bottom: 25px;
   margin-top: 15px;
-  /* box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); */
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
 }
-
-/* .book-list__card-title,
-  .book-list__card-authors,
-  .book-list__card-categories {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }  */
 
 .book-list__card-title {
   font-size: 1.1em;

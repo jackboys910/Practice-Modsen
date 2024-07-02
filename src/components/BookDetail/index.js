@@ -39,16 +39,6 @@ const BookDetail = ({ book, onBack, onAuthorSearch }) => {
     }
   }, [book]);
 
-  // const getHighQualityImage = (imageLinks) => {
-  //   if (imageLinks) {
-  //     console.log('Image Links:', imageLinks);
-  //     return imageLinks.extraLarge || imageLinks.large || imageLinks.thumbnail;
-  //   }
-  //   return null;
-  // };
-
-  // const highQualityImage = getHighQualityImage(imageLinks);
-
   const handleAuthorClick = (author) => {
     onAuthorSearch(`"${author}"`);
   };
@@ -59,9 +49,6 @@ const BookDetail = ({ book, onBack, onAuthorSearch }) => {
         <div className='book-detail__block-image'>{image && <img className='book-detail__image-big' src={image} alt={title} />}</div>
       </div>
       <div className='book-detail__block'>
-        {/* <button className='book-detail__back-button' onClick={onBack}>
-          Back
-        </button> */}
         <div className='book-detail__arrow-align'>
           <i className='fa fa-arrow-left book-detail__arrow' aria-hidden='true' onClick={onBack}></i>
         </div>

@@ -23,8 +23,6 @@ function BookSearch() {
 
   const fetchBooks = async (newQueryParams) => {
     const { query, category, sort, startIndex } = newQueryParams;
-    // const categoryQuery = category !== 'all' ? `+subject:${category}` : '';
-    // const url = `https://www.googleapis.com/books/v1/volumes?q=${query}${categoryQuery}&orderBy=${sort}&startIndex=${startIndex}&maxResults=30&key=${API_KEY}`;
 
     const categoryQuery = category !== 'all' ? `+subject:${encodeURIComponent(category)}` : '';
     const searchQuery = query ? encodeURIComponent(query) : '';
@@ -43,7 +41,6 @@ function BookSearch() {
 
       const newBooks = data.items || [];
       setBooks((prevBooks) => {
-        // Фильтруем дублирующиеся книги
         const allBooks = [...prevBooks, ...newBooks];
         const uniqueBooks = Array.from(new Set(allBooks.map((book) => book.id))).map((id) => allBooks.find((book) => book.id === id));
         return uniqueBooks;
