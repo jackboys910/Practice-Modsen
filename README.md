@@ -1,5 +1,7 @@
 Дерюгин Георгий
 
+**[deploy](https://jackboys910.github.io/Practice-Modsen/)** - ссылка на деплой проекта.
+
 # Tестовое задание Modsen Books Search
 
 
