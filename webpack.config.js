@@ -8,6 +8,7 @@ module.exports = {
   output: {
     filename: 'bundle.js', // Имя выходного файла сборки
     path: path.resolve(__dirname, 'dist'), // Путь для выходного файла сборки
+    publicPath: '/',
   },
 
   module: {
