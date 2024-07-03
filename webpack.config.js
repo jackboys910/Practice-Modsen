@@ -24,6 +24,10 @@ module.exports = {
           loader: 'babel-loader',
         },
       },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i, // Регулярное выражение для обработки изображений
+        type: 'asset/resource', // Используйте тип resource для изображений
+      },
     ],
   },
 
