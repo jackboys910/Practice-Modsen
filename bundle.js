@@ -454,7 +454,7 @@ eval("module.exports = __webpack_require__.p + \"99fa6486a4e7be7698f8.jpg\";\n\n
 /******/ 	
 /******/ 	/* webpack/runtime/publicPath */
 /******/ 	(() => {
-/******/ 		__webpack_require__.p = "/";
+/******/ 		__webpack_require__.p = "/Practice-Modsen/";
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/jsonp chunk loading */
