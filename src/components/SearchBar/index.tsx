@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent, KeyboardEvent } from 'react';
 
-const SearchBar = ({ onSearch, className }) => {
+interface SearchBarProps {
+  onSearch: (params: { query: string; category: string; sort: string }) => void;
+  className?: string;
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({ onSearch, className }) => {
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('all');
   const [sort, setSort] = useState('relevance');
@@ -24,21 +29,21 @@ const SearchBar = ({ onSearch, className }) => {
     onSearch({ query: query || 'all', category, sort });
   };
 
-  const handleQueryChange = (e) => {
+  const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
 
-  const handleKeyPress = (e) => {
+  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       handleSearch();
     }
   };
 
-  const handleCategoryChange = (e) => {
+  const handleCategoryChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value);
   };
 
-  const handleSortChange = (e) => {
+  const handleSortChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setSort(e.target.value);
   };
 

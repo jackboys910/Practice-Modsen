@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
 module.exports = {
-  entry: './src/index.js', // Точка входа для сборки проекта
+  entry: './src/index.tsx', // Точка входа для сборки проекта
 
   output: {
     filename: 'bundle.js', // Имя выходного файла сборки
@@ -12,6 +12,11 @@ module.exports = {
 
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
       {
         test: /\.css$/, // Регулярное выражение для обработки файлов с расширением .css
         use: ['style-loader', 'css-loader'], // Загрузчики, используемые для обработки CSS-файлов
@@ -32,7 +37,15 @@ module.exports = {
     }),
     new Dotenv(),
   ],
-
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
+    fallback: {
+      fs: false,
+      os: false,
+      path: false,
+      crypto: false,
+    },
+  },
   devServer: {
     static: {
       directory: path.join(__dirname, 'dist'), // Каталог для статики

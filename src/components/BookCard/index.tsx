@@ -1,6 +1,25 @@
 import React from 'react';
 
-const BookCard = ({ book, onClick }) => {
+interface VolumeInfo {
+  title: string;
+  authors?: string[];
+  categories?: string[];
+  imageLinks?: {
+    thumbnail: string;
+  };
+}
+
+interface Book {
+  id: string;
+  volumeInfo: VolumeInfo;
+}
+
+interface BookCardProps {
+  book: Book;
+  onClick: (book: Book) => void;
+}
+
+const BookCard: React.FC<BookCardProps> = ({ book, onClick }) => {
   const { volumeInfo } = book;
   const { title, authors, categories, imageLinks } = volumeInfo || {};
 

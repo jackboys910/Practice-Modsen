@@ -4,12 +4,38 @@ import React, { useEffect, useState } from 'react';
 
 import { API_BASE_URL, API_KEY } from '../../constants/config';
 
-const BookDetail = ({ book, onBack, onAuthorSearch }) => {
-  const [image, setImage] = useState(null);
+interface VolumeInfo {
+  title: string;
+  authors?: string[];
+  categories?: string[];
+  description?: string;
+  imageLinks?: {
+    extraLarge?: string;
+    large?: string;
+    medium?: string;
+    small?: string;
+    thumbnail?: string;
+    smallThumbnail?: string;
+  };
+}
+
+interface Book {
+  id: string;
+  volumeInfo: VolumeInfo;
+}
+
+interface BookDetailProps {
+  book: Book;
+  onBack: () => void;
+  onAuthorSearch: (author: string) => void;
+}
+
+const BookDetail: React.FC<BookDetailProps> = ({ book, onBack, onAuthorSearch }) => {
+  const [image, setImage] = useState<string | null>(null);
   const { volumeInfo } = book;
   const { title, authors, categories, description, imageLinks } = volumeInfo || {};
 
-  const fetchImage = async (bookId) => {
+  const fetchImage = async (bookId: string) => {
     try {
       const response = await fetch(`${API_BASE_URL}/${bookId}?key=${API_KEY}`);
       const data = await response.json();
@@ -39,8 +65,8 @@ const BookDetail = ({ book, onBack, onAuthorSearch }) => {
     }
   }, [book]);
 
-  const handleAuthorClick = (author) => {
-    onAuthorSearch(`"${author}"`);
+  const handleAuthorClick = (author: string) => {
+    onAuthorSearch(author);
   };
 
   return (
@@ -65,9 +91,7 @@ const BookDetail = ({ book, onBack, onAuthorSearch }) => {
               ))}
             </p>
           )}
-          <div className='book-detail__description'>
-            <p className={description ? 'book-detail__description-text' : ''}>{description}</p>
-          </div>
+          {description && <p className='book-detail__description'>{description}</p>}
         </div>
       </div>
     </div>
