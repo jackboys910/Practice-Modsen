@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  password  String
+  createdAt DateTime  @default(now())
+  profile   UserProfile?
+  ratings   UserBookRating[]
+  feedback  Feedback?
+}
+
+model UserProfile {
+  id            Int      @id @default(autoincrement())
+  userId        Int      @unique
+  nickname      String   @unique
+  description   String?
+  phoneNumber   String?
+  location      String?
+  profilePicture String? @default("defaultUser.png")
+  favoriteBook  String?
+  favoriteAuthor String?
+  registeredAt  DateTime @default(now())
+  lastOnline    DateTime @updatedAt
+  user          User     @relation(fields: [userId], references: [id])
+}
+
+model Book {
+  id    Int    @id @default(autoincrement())
+  uri   String @unique
+  ratings UserBookRating[]
+  averageRating BookAverageRating?
+}
+
+model UserBookRating {
+  id       Int    @id @default(autoincrement())
+  userId   Int
+  bookUri  String
+  rating   Int
+
+  user     User   @relation(fields: [userId], references: [id])
+  book     Book   @relation(fields: [bookUri], references: [uri])
+
+  @@unique([userId, bookUri])
+}
+
+model BookAverageRating {
+  id       Int    @id @default(autoincrement())
+  bookUri  String @unique
+  average  Float
+
+  book     Book   @relation(fields: [bookUri], references: [uri])
+}
+
+model Feedback {
+  id         Int      @id @default(autoincrement())
+  userId     Int      @unique
+  isUseful   Boolean
+  suggestion String?
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id])
+}
