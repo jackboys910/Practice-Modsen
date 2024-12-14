@@ -6,7 +6,7 @@ class FeedbackController {
     const { isUseful, suggestion } = req.body
 
     if (!userId) {
-      return res.status(401).send('User not authorized')
+      return res.status(401).send({ error: 'User not authorized' })
     }
 
     try {
@@ -15,7 +15,9 @@ class FeedbackController {
       })
 
       if (existingFeedback) {
-        return res.status(400).send('Feedback already submitted by this user')
+        return res
+          .status(400)
+          .send({ error: 'Feedback already submitted by this user' })
       }
 
       const feedback = await db.prisma.feedback.create({
@@ -29,7 +31,7 @@ class FeedbackController {
       res.status(201).json(feedback)
     } catch (error) {
       console.error('Error submitting feedback:', error.message)
-      res.status(500).send('Error submitting feedback')
+      res.status(500).send({ error: 'Error submitting feedback' })
     }
   }
 }

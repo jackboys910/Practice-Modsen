@@ -8,7 +8,7 @@ const profileValidationSchema = yup.object().shape({
   location: yup
     .string()
     .matches(/^[а-яА-ЯёЁa-zA-Z0-9.,-]+$/, 'Адрес может содержать буквы, цифры, точки, запятые и тире.')
-    .max(50, 'Максимум 50 символов.'),
+    .max(35, 'Максимум 35 символов.'),
   profilePicture: yup
     .mixed()
     .nullable()
