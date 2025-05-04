@@ -17,7 +17,7 @@ class RatingController {
       const book = await db.prisma.book.upsert({
         where: { uri: bookUri },
         create: { uri: bookUri },
-        update: {}, // Ничего не обновляем, если книга уже существует
+        update: {},
       })
 
       const userRating = await db.prisma.userBookRating.upsert({

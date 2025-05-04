@@ -1,6 +1,7 @@
 import './index.css'
 
 import React, { useEffect } from 'react'
+import { AiFillHeart } from 'react-icons/ai'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -41,6 +42,9 @@ const NavBar = () => {
       <div className='navbar__actions'>
         {user ? (
           <>
+            <Link to='/favorites'>
+              <AiFillHeart size={28} color='#fff' style={{ cursor: 'pointer', marginTop: 10, marginRight: 5 }} />
+            </Link>
             <Link to='/profile'>
               <svg style={{ width: 40, height: 40, marginTop: 4 }} xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 512'>
                 <path

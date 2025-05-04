@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 
+import favoritesReducer from './slices/favoritesSlice'
 import feedbackReducer from './slices/feedbackSlice'
 import profileReducer from './slices/profileSlice'
 import ratingReducer from './slices/ratingSlice'
@@ -11,6 +12,7 @@ const store = configureStore({
     profile: profileReducer,
     rating: ratingReducer,
     feedback: feedbackReducer,
+    favorites: favoritesReducer,
   },
 })
 

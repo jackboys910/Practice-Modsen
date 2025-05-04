@@ -1,45 +1,34 @@
 import './index.css'
 
 import React, { useEffect, useState } from 'react'
+import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { API_BASE_URL, API_KEY } from '../../constants/config'
+import { addUserFavorite, fetchUserFavorites, removeUserFavoriteHeart } from '../../store/slices/favoritesSlice'
 import { getAverageRating, getUserRating, setBookRating } from '../../store/slices/ratingSlice'
 import { isUserLoggedIn } from '../../utils/auth'
 
 const BookDetail = ({ book, onBack, onAuthorSearch }) => {
   const dispatch = useDispatch()
   const { averageRating, userRating } = useSelector((state) => state.rating)
+  const { favorites } = useSelector((state) => state.favorites)
   const [hoverRating, setHoverRating] = useState(0)
   const [selectedRating, setSelectedRating] = useState(0)
   const [image, setImage] = useState(null)
+  const [isFavorite, setIsFavorite] = useState(false)
   const { volumeInfo } = book
-  const { title, authors, categories, description, imageLinks } = volumeInfo || {}
+  const { title, authors, categories, description } = volumeInfo || {}
 
-  const isAuthenticated = isUserLoggedIn()
-
-  const fetchImage = async (bookId) => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/${bookId}?key=${API_KEY}`)
-      const data = await response.json()
-      if (data.volumeInfo && data.volumeInfo.imageLinks) {
-        setImage(
-          data.volumeInfo.imageLinks.extraLarge ||
-            data.volumeInfo.imageLinks.large ||
-            data.volumeInfo.imageLinks.medium ||
-            data.volumeInfo.imageLinks.small ||
-            data.volumeInfo.imageLinks.thumbnail ||
-            data.volumeInfo.imageLinks.smallThumbnail,
-        )
-      } else {
-        console.error('No image links available')
-        setImage(null)
-      }
-    } catch (error) {
-      console.error('Error fetching image:', error)
-      setImage(null)
+  useEffect(() => {
+    if (isAuthenticated) {
+      setIsFavorite(
+        favorites.some((fav) => {
+          return fav.bookUri === book.id || fav.id === book.id
+        }),
+      )
     }
-  }
+  }, [favorites, book.id])
 
   useEffect(() => {
     if (book.id) {
@@ -60,6 +49,30 @@ const BookDetail = ({ book, onBack, onAuthorSearch }) => {
     setSelectedRating(userRating || 0)
   }, [userRating])
 
+  const isAuthenticated = isUserLoggedIn()
+
+  const fetchImage = async (bookId) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/${bookId}?key=${API_KEY}`)
+      const data = await response.json()
+      if (data.volumeInfo && data.volumeInfo.imageLinks) {
+        setImage(
+          // data.volumeInfo.imageLinks.extraLarge ||
+          //   data.volumeInfo.imageLinks.large ||
+          //   data.volumeInfo.imageLinks.medium ||
+          //   data.volumeInfo.imageLinks.small ||
+          data.volumeInfo.imageLinks.thumbnail || data.volumeInfo.imageLinks.smallThumbnail,
+        )
+      } else {
+        console.error('No image links available')
+        setImage(null)
+      }
+    } catch (error) {
+      console.error('Error fetching image:', error)
+      setImage(null)
+    }
+  }
+
   const handleAuthorClick = (author) => {
     onAuthorSearch(`"${author}"`)
   }
@@ -67,6 +80,22 @@ const BookDetail = ({ book, onBack, onAuthorSearch }) => {
   const handleSetRating = (rating) => {
     setSelectedRating(rating)
     dispatch(setBookRating({ bookUri: book.id, rating }))
+  }
+
+  const handleBack = () => {
+    onBack()
+    if (isAuthenticated) {
+      dispatch(fetchUserFavorites())
+    }
+  }
+
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite)
+    if (isFavorite) {
+      dispatch(removeUserFavoriteHeart(book.id))
+    } else {
+      dispatch(addUserFavorite(book))
+    }
   }
 
   const renderStars = (rating, isHover = false, isInteractive = false) =>
@@ -90,8 +119,15 @@ const BookDetail = ({ book, onBack, onAuthorSearch }) => {
         <div className='book-detail__block-image'>{image && <img className='book-detail__image-big' src={image} alt={title} />}</div>
       </div>
       <div className='book-detail__block'>
-        <div className='book-detail__arrow-align'>
-          <i className='fa fa-arrow-left book-detail__arrow' aria-hidden='true' onClick={onBack}></i>
+        <div className='book-detail__navbar'>
+          <div className='book-detail__arrow-align'>
+            <i className='fa fa-arrow-left book-detail__arrow' aria-hidden='true' onClick={handleBack}></i>
+            {isAuthenticated && (
+              <div className={`heart-icon ${isFavorite ? 'favorite' : ''}`} onClick={toggleFavorite}>
+                {isFavorite ? <AiFillHeart size={32} color='red' /> : <AiOutlineHeart size={32} />}
+              </div>
+            )}
+          </div>
         </div>
         <div className='book-detail__info'>
           {categories && categories.length > 0 && <p className='book-detail__categories'>{categories.join(', ')}</p>}

@@ -1,12 +1,25 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 import NavBar from '../components/NavBar'
+import { fetchUserFavorites } from '../store/slices/favoritesSlice'
+import { isUserLoggedIn } from '../utils/auth'
 import AutorizationPage from './AuthorizationPage'
+import FavoritesPage from './FavoritesPage'
 import MainPage from './MainPage'
 import ProfilePage from './ProfilePage'
 
 const AppRouter = () => {
+  const dispatch = useDispatch()
+  const isAuthenticated = isUserLoggedIn()
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(fetchUserFavorites())
+    }
+  })
+
   return (
     <Router>
       <NavBar />
@@ -14,6 +27,7 @@ const AppRouter = () => {
         <Route path='/' element={<MainPage />} />
         <Route path='/auth/:type' element={<AutorizationPage />} />
         <Route path='/profile' element={<ProfilePage />} />
+        <Route path='/favorites' element={<FavoritesPage />} />
       </Routes>
     </Router>
   )

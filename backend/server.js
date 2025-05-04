@@ -8,6 +8,7 @@ const UserController = require('./controllers/userController')
 const ProfileController = require('./controllers/profileController')
 const RatingController = require('./controllers/ratingController')
 const FeedbackController = require('./controllers/feedbackController')
+const FavoritesController = require('./controllers/favoritesController')
 
 class Server {
   constructor() {
@@ -62,6 +63,21 @@ class Server {
       '/submitFeedback',
       AuthMiddleware.authenticateJWT,
       FeedbackController.submitFeedback
+    )
+    this.app.get(
+      '/favorites',
+      AuthMiddleware.authenticateJWT,
+      FavoritesController.getFavorites
+    )
+    this.app.post(
+      '/favorites',
+      AuthMiddleware.authenticateJWT,
+      FavoritesController.addFavorite
+    )
+    this.app.delete(
+      '/favorites/:bookUri',
+      AuthMiddleware.authenticateJWT,
+      FavoritesController.removeFavorite
     )
   }
 

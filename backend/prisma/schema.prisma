@@ -15,6 +15,7 @@ model User {
   profile   UserProfile?
   ratings   UserBookRating[]
   feedback  Feedback?
+  favorites Favorite[]
 }
 
 model UserProfile {
@@ -37,6 +38,7 @@ model Book {
   uri   String @unique
   ratings UserBookRating[]
   averageRating BookAverageRating?
+  favorites     Favorite[]
 }
 
 model UserBookRating {
@@ -66,4 +68,16 @@ model Feedback {
   suggestion String?
   createdAt  DateTime @default(now())
   user       User     @relation(fields: [userId], references: [id])
+}
+
+model Favorite {
+  id       Int      @id @default(autoincrement())
+  userId   Int
+  bookUri  String
+  createdAt DateTime @default(now())
+  
+  user     User     @relation(fields: [userId], references: [id])
+  book     Book     @relation(fields: [bookUri], references: [uri])
+
+  @@unique([userId, bookUri])
 }
