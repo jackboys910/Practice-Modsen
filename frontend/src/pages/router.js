@@ -9,6 +9,7 @@ import AutorizationPage from './AuthorizationPage'
 import FavoritesPage from './FavoritesPage'
 import MainPage from './MainPage'
 import ProfilePage from './ProfilePage'
+import QuizPage from './QuizPage'
 
 const AppRouter = () => {
   const dispatch = useDispatch()
@@ -28,6 +29,7 @@ const AppRouter = () => {
         <Route path='/auth/:type' element={<AutorizationPage />} />
         <Route path='/profile' element={<ProfilePage />} />
         <Route path='/favorites' element={<FavoritesPage />} />
+        <Route path='/quiz' element={<QuizPage />} />
       </Routes>
     </Router>
   )

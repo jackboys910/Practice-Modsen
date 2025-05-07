@@ -8,12 +8,13 @@ import BookList from '../BookList'
 import Loader from '../Loader'
 import SearchBar from '../SearchBar'
 
-function BookSearch() {
+function BookSearch({ initialQuery = '' }) {
   const [books, setBooks] = useState([])
   const [loading, setLoading] = useState(false)
   const [totalItems, setTotalItems] = useState(0)
+  const [query, setQuery] = useState(initialQuery || '')
   const [queryParams, setQueryParams] = useState({
-    query: 'all',
+    query: initialQuery || 'all',
     category: 'all',
     sort: 'relevance',
     startIndex: 0,
@@ -24,9 +25,10 @@ function BookSearch() {
   const fetchBooks = async (newQueryParams) => {
     const { query, category, sort, startIndex } = newQueryParams
 
+    const effectiveQuery = query.trim() === '' ? 'all' : query
     const categoryQuery = category !== 'all' ? `+subject:${encodeURIComponent(category)}` : ''
-    const searchQuery = query ? encodeURIComponent(query) : ''
-    const url = `${API_BASE_URL}?q=${searchQuery}${categoryQuery}&orderBy=${encodeURIComponent(sort)}&startIndex=${startIndex}&maxResults=30&key=${API_KEY}`
+    const searchQuery = effectiveQuery ? encodeURIComponent(effectiveQuery) : ''
+    const url = `${API_BASE_URL}?q=${searchQuery}${categoryQuery}&publishedDate=${encodeURIComponent(sort)}&startIndex=${startIndex}&maxResults=30&key=${API_KEY}`
 
     try {
       setLoading(true)
@@ -56,13 +58,19 @@ function BookSearch() {
   }
 
   useEffect(() => {
-    fetchBooks(queryParams)
-  }, [])
+    if (initialQuery) {
+      setQuery(initialQuery)
+      fetchBooks({ ...queryParams, query: initialQuery })
+    } else {
+      fetchBooks(queryParams)
+    }
+  }, [initialQuery])
 
   const handleSearch = (searchParams) => {
     setSelectBook(null)
     setBooks([])
-    fetchBooks({ ...searchParams, startIndex: 0 })
+    setQuery(searchParams.query)
+    fetchBooks({ ...searchParams, query: searchParams.query.trim() || 'all', startIndex: 0 })
   }
 
   const loadMoreBooks = () => {
@@ -87,7 +95,7 @@ function BookSearch() {
 
   return (
     <div className='book-search'>
-      <SearchBar onSearch={handleSearch} className={selectedBook ? 'no-margin' : ''} />
+      <SearchBar onSearch={handleSearch} className={selectedBook ? 'no-margin' : ''} query={query} setQuery={setQuery} />
       {loading && <Loader />}
       {error && <div className='book-search__error-message'>{error}</div>}
       {!selectedBook && totalItems > 0 && !loading && (

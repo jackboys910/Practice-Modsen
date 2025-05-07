@@ -2,11 +2,13 @@ import './index.css'
 
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom'
 
 import BookSearch from '../../components/BookSearch'
 import FeedbackModal from '../../components/FeedbackModal'
 
 function MainPage() {
+  const location = useLocation()
   const { user } = useSelector((state) => state.user)
   const { userRating } = useSelector((state) => state.rating)
   const { hasSubmittedFeedback } = useSelector((state) => state.feedback)
@@ -14,6 +16,7 @@ function MainPage() {
   const [ratingCount, setRatingCount] = useState(0)
 
   const token = localStorage.getItem('token')
+  const searchQuery = location.state?.searchQuery || ''
 
   useEffect(() => {
     if (user && userRating > 0) {
@@ -41,7 +44,7 @@ function MainPage() {
 
   return (
     <div className='main'>
-      <BookSearch />
+      <BookSearch initialQuery={searchQuery} />
       {showFeedbackModal && <FeedbackModal onClose={handleCloseModal} />}
     </div>
   )

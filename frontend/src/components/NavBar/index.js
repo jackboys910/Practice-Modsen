@@ -2,6 +2,7 @@ import './index.css'
 
 import React, { useEffect } from 'react'
 import { AiFillHeart } from 'react-icons/ai'
+import { MdOutlineQuiz } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -42,6 +43,9 @@ const NavBar = () => {
       <div className='navbar__actions'>
         {user ? (
           <>
+            <Link to='/quiz'>
+              <MdOutlineQuiz size={28} color='#fff' style={{ cursor: 'pointer', marginTop: 10, marginRight: 5 }} />
+            </Link>
             <Link to='/favorites'>
               <AiFillHeart size={28} color='#fff' style={{ cursor: 'pointer', marginTop: 10, marginRight: 5 }} />
             </Link>

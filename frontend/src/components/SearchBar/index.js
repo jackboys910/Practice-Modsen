@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 
-const SearchBar = ({ onSearch, className }) => {
-  const [query, setQuery] = useState('')
+const SearchBar = ({ onSearch, className, query, setQuery }) => {
   const [category, setCategory] = useState('all')
   const [sort, setSort] = useState('relevance')
 
@@ -21,7 +20,7 @@ const SearchBar = ({ onSearch, className }) => {
   ]
 
   const handleSearch = () => {
-    onSearch({ query: query || 'all', category, sort })
+    onSearch({ query: query.trim(), category, sort })
   }
 
   const handleQueryChange = (e) => {
